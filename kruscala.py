@@ -1,10 +1,10 @@
-#el primo       на выводе построенные дороги
+#на выводе построенные дороги
 pts = input().split(" ")#названия точек
 roads = input().split(" ")#дороги из названий дорог типа ab
 lngth = input().split(" ")#длина соответсвующих дорог
 chroads = []
 snlngth = []
-asc = True
+
 class1 = -1
 class2 = -1
 for i in lngth:#отсортированный по длине массив
@@ -19,7 +19,7 @@ for i in snlngth:
             class1 = ind
         if b[1] in eq[ind]:
             class2 = ind
-    print(class1,class2)
+
     if class1==class2 and class1==-1:#если оба ни в одном из классов
         eq.append([b[0],b[1]])
     elif class1!=class2 and (class1==-1 or class2==-1):#если только один без класса
