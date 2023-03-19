@@ -1,0 +1,35 @@
+stpoint=input('start: ')
+ptscheck=dict()
+ptsstart=dict()
+data = []
+ptslen=dict()
+minlen=0
+newst=''
+for i in range(int(input('points: '))):
+    data.append(input().split(' ')) # ввод точка потом подряд соседние точки с длиной до них
+    ptscheck[data[i][0]]=False
+    ptsstart[data[i][0]]=False
+    ptslen[data[i][0]]= 0
+ptscheck[stpoint]=True
+while False in ptscheck.values():
+    ptsstart[stpoint]=True
+    for j in data:
+        if j[0]==stpoint:
+            for c in range(1,len(j)-1,2):
+                if ptsstart[j[c]]==False and (ptslen[stpoint]+int(j[c+1])<ptslen[j[c]] or ptscheck[j[c]]==False):
+                    ptscheck[j[c]]=True
+                    ptslen[j[c]]=ptslen[stpoint]+int(j[c+1])
+            for i in ptslen.keys():
+                if ptsstart[i]==False and ptscheck[i]:
+                    if minlen==0:
+                        minlen=ptslen[i]
+                        stpoint=i
+                    elif minlen>ptslen[i]:
+                        minlen=ptslen[i]
+                        stpoint=i
+            print(stpoint)
+            minlen=0
+                        
+            break
+        
+print(ptslen)
