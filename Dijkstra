@@ -27,9 +27,7 @@ while False in ptscheck.values():
                     elif minlen>ptslen[i]:
                         minlen=ptslen[i]
                         stpoint=i
-            print(stpoint)
-            minlen=0
-                        
+            minlen=0      
             break
         
 print(ptslen)
