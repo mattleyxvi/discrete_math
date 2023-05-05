@@ -1,0 +1,35 @@
+import math
+def conv(inp):
+    q=inp
+    for i in q:
+        i=int(i)
+    return q
+N=int(input('N:' ))
+comps=input('companies: ').split(' ')
+a=[[math.inf for j in range(N)] for i in range(N)]
+b=a
+c=a
+while True:
+    rd=conv(input().split(' '))
+    a[rd[0]][rd[1]]=rd[2]
+    b[rd[0]][rd[1]]=rd[3]
+    c[rd[0]][rd[1]]=rd[4]
+for k in range(N):
+    for i in range(N):
+        for j in range(N):
+            if i!=j :
+                a[i][j]=min(a[i][k]+a[k][j],a[i][j])
+                b[i][j]=min(b[i][k]+b[k][j],b[i][j])
+                c[i][j]=min(c[i][k]+c[k][j],c[i][j])
+while (input('search? ')=='y'):                
+    trgt=conv(input('points: ').split(' '))
+    if (a[trgt[0]][trgt[1]]<b[trgt[0]][trgt[1]] and a[trgt[0]][trgt[1]]<c[trgt[0]][trgt[1]]):
+        ch=0
+        ln=a[trgt[0]][trgt[1]]
+    elif b[trgt[0]][trgt[1]]<c[trgt[0]][trgt[1]]:
+        ch=1
+        ln=b[trgt[0]][trgt[1]]
+    else:
+        ch=2
+        ln=c[trgt[0]][trgt[1]]
+    print(comps[ch],ln)
