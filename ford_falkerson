@@ -1,0 +1,90 @@
+class Graph:
+
+    def __init__(self, graph):
+        self.graph = graph
+        self. ROW = len(graph)
+
+
+    def searching_algo(self, s, t, parent):
+
+        visited = [False] * (self.ROW)
+        queue = []
+
+        queue.append(s)
+        visited[s] = True
+
+        while queue:
+
+            u = queue.pop(0)
+
+            for ind, val in enumerate(self.graph[u]):
+                if visited[ind] == False and val > 0:
+                    queue.append(ind)
+                    visited[ind] = True
+                    parent[ind] = u
+
+        return True if visited[t] else False
+
+
+    def ford_fulkerson(self, source, sink):
+        parent = [-1] * (self.ROW)
+        max_flow = 0
+
+        while self.searching_algo(source, sink, parent):
+
+            path_flow = float("Inf")
+            s = sink
+            while(s != source):
+                path_flow = min(path_flow, self.graph[parent[s]][s])
+                s = parent[s]
+
+            max_flow += path_flow
+
+
+            v = sink
+            while(v != source):
+                u = parent[v]
+                self.graph[u][v] -= path_flow
+                self.graph[v][u] += path_flow
+                v = parent[v]
+
+        return max_flow
+
+'''
+graph = [[0, 16, 13, 0, 0, 0],
+         [0, 0, 10, 13, 30, 0],
+         [0, 4, 0, 14, 0, 0],
+         [0, 0, 9, 0, 0, 20],
+         [0, 0, 0, 7, 0, 4],
+         [0,0,0,0,0,0]
+         ]
+'''
+
+
+num = int(input("Введите кол-во вершин: "))
+graph = []
+
+for i in range(0,num,1):
+    Temp = [0] * num
+    graph.append(Temp)
+    graph[i][i] = graph[0][0] = 0
+
+for i in range(0,num,1):
+    graph[i][num - 1 - i] = 0
+
+
+verges = int(input('Введите кол-во рёбер: '))
+print("Образец ввода: вершины + пропускная способность (всё через пробел)")
+
+for i in range(0, verges, 1):
+    ans = input().split(' ')
+    graph[int(ans[0]) - 1][int(ans[1]) - 1] = int(ans[2])
+
+
+
+g = Graph(graph)
+
+source = int(input('Введите источник: ')) - 1  
+sink = int(input("Введите сток: ")) - 1      
+
+print("Max Flow: %d " % g.ford_fulkerson(source, sink))
